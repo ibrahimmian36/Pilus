@@ -278,6 +278,58 @@ claiming this layer as passed. Layers 0–6 stand on their own; Layer 7
 would add independence from the community cache and from the
 distributed toolchain binary, and nothing else.
 
+### Adversarial probes — attacking the statement, not the proof
+
+Once the kernel replay and the axiom gate pass, the proof cannot be subtly
+wrong: that is what formalization buys. The residual risk is entirely in
+whether the *sentence* means what Erdős asked, and whether the definitions
+are non-degenerate. A formalization can be hollow in a way no amount of
+compiling detects — as formal-conjectures' own rendering of this problem
+demonstrates (§5). So we attacked those two points directly.
+
+The attack: if `logAverage` carried a wrong normalization — a stray
+constant, a wrong logarithm base, a mis-set cutoff — then instantiating
+Wang's own positive recovery theorem
+(`hasLogDensity_of_eventually_periodic`) at cases whose answer is
+classically known would produce the wrong number. We pinned it at three
+such points, and separately checked that the problem is not trivially
+false. `MRAdversarial.lean`:
+
+    theorem evens_density_half :
+        HasLogDensity {n : ℕ | 0 < n ∧ n % 2 = 0} ((1 : ℝ) / 2)
+
+    theorem all_positives_density_one :
+        HasLogDensity {n : ℕ | 0 < n} (1 : ℝ)
+
+    theorem mult_three_density_third :
+        HasLogDensity {n : ℕ | 0 < n ∧ n % 3 = 0} ((1 : ℝ) / 3)
+
+    theorem evenSieve_has_density :
+        HasLogDensity evenSieveSurvivors ((1 : ℝ) / 2)
+
+**VERDICT: PASS.** All four compile, axioms exactly the standard three.
+The second is the sharpest check on the normalizing factor 1/log x: a wrong
+denominator surfaces here as a number other than 1. The third rules out a
+normalization that is accidentally right only at period 2. The fourth is a
+genuine admissible instance of the problem itself — the delayed even-sieve
+`A = {2}`, `X₂ = {0}` — and it *does* have a logarithmic density, so
+`Erdos486Assertion` is not refuted by a simple congruence system and the
+counterexample has to earn its keep.
+
+Two further points we checked by hand rather than by compiling. First,
+Wang's `Erdos486Assertion` requires `0 ∉ A`, which is what closes the
+`ZMod 0 = ℤ` hole that sinks the formal-conjectures version; the modulus
+`n = 1` is admitted but harmless, since `ZMod 1` is trivial and the
+resulting survivor set is finite, hence of logarithmic density 0. Second,
+`erdos486_negative` follows from the `¬∃ d` conjunct of
+`QuantitativeCounterexample` alone; the constants 177/200 and 49/50 are a
+strengthening rather than load-bearing, though we confirm they do separate.
+
+What this does **not** establish: that no other reading of Erdős's original
+sentence is defensible. We checked Wang's statement against the corrected
+site text and against the problem's own history, and we report that it
+matches. That is a judgement, and we label it one.
+
 ### Empirical corroboration (not a proof)
 
 `probes/probe486.py` re-derives the paper's quantitative claims
@@ -316,9 +368,11 @@ and is labeled adjudication, not verification.
 Not verified, stated plainly:
 - Layer 7 has not been run (see above).
 - The root module gap in Layer 6 (immaterial, but real).
-- We did not verify mathlib itself, nor re-derive the pin's identity to
-  the upstream tag in this audit; we rely on the check performed during
-  the 1002 audit of the same pinned rev.
+- We did not verify mathlib itself. We did re-verify the pin's identity
+  in this audit rather than inheriting it: the official
+  leanprover-community/mathlib4 `v4.27.0` tag resolves to commit
+  `a3a10db0e9d66acbebf76c5e6a135066525ac900`, which is what Wang's
+  `lake-manifest.json` names and what our local checkout reports.
 - We did not formalize the Behrend argument reconciling strict and
   inclusive activation (§5 of the paper); the development does not use
   it.

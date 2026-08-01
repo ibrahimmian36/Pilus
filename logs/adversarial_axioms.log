@@ -1,0 +1,4 @@
+'MRAdversarial.evens_density_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MRAdversarial.all_positives_density_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MRAdversarial.mult_three_density_third' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MRAdversarial.evenSieve_has_density' depends on axioms: [propext, Classical.choice, Quot.sound]

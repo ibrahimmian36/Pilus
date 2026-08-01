@@ -44,8 +44,18 @@ independent replay from a cleared build tree; a mechanically enforced
 axiom gate over every theorem in the development rather than the
 headline two; an external kernel re-check of the compiled environment;
 an exact-arithmetic re-derivation of the construction's constants,
-independent of the Lean development; and a report that states its own
-limits as plainly as its results.
+independent of the Lean development; an adversarial pass aimed at the one
+thing a passing compile cannot rule out — a faithful-looking statement that
+is secretly hollow; and a report that states its own limits as plainly as
+its results.
+
+On that last point, since it is the part most easily waved at: after a clean
+replay under an axiom gate, the proof cannot be subtly wrong. What can still
+fail is the *statement*. So we tried to break it — pinning `logAverage`
+against three classically known densities, and exhibiting an admissible
+instance of the problem that does have a density, which a degenerate
+formalization would not admit. It held. See `tools/MRAdversarial.lean` and
+the adversarial subsection of the report.
 
 ## The formal-conjectures statement of this problem is degenerate
 
@@ -82,6 +92,7 @@ statement, and it should not be recorded as doing so.**
 | `reports/erdos-486.md` | The verification report: seven layers (six executed), the counterexample mechanism, the trust base, and what we did *not* verify |
 | `tools/MRAxioms.lean` | The axiom manifest: `#print axioms` on both public theorems |
 | `tools/AxiomSweep.lean` | Our mechanical sweep: every theorem in the compiled namespace via `CollectAxioms`, one memoized closure walk, so nothing hides behind a hand-kept manifest (492 theorems) |
+| `tools/MRAdversarial.lean` | Our falsification attempt: pins the normalization at three classically known densities, and exhibits a real instance of the problem that *does* have one, so the statement is not hollow and the counterexample is not cheap |
 | `tools/MR486Defect.lean` | Four theorems certified against formal-conjectures' own `Set.HasLogDensity`, showing its `erdos_486` is contentless and that the obvious fix still leaks |
 | `probes/probe486.py` | Exact-rational corroboration of the block lemma's constants and the global assembly arithmetic, independent of the Lean development |
 | `pods/pod_build.sh` | The from-source bootstrap: Lean toolchain compiled from source, mathlib rebuilt with no cache, checks re-run, `lean4checker` replay. **Staged, not executed** — see below |

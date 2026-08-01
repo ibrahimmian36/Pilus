@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you refer to this verification, please cite it as below."
+title: "Pilus: independent kernel-level verification of a claimed negative resolution of Erdős Problem 486"
+abstract: >-
+  Artifacts of a third-party replay of the Lean 4 formalization
+  accompanying a claimed negative resolution of Erdős Problem 486: a
+  mechanical axiom sweep over every theorem in the development, an
+  external lean4checker replay of the compiled environment, an
+  exact-arithmetic corroboration of the construction's constants, and a
+  from-source bootstrap script. Includes machine-checked findings that
+  the formal-conjectures statement of Problem 486 is degenerate for two
+  independent reasons and that the obvious repair does not fix it. The
+  mathematics is due to the claimant; the contribution here is the
+  independent verification.
+authors:
+  - family-names: Mian
+    given-names: Ibrahim
+  - family-names: Siddique
+    given-names: Shayaan
+repository-code: "https://github.com/ibrahimmian36/Pilus"
+license: Apache-2.0
+year: 2026
+keywords:
+  - Lean 4
+  - formal verification
+  - proof auditing
+  - Erdős problems
+  - logarithmic density

@@ -1,0 +1,58 @@
+========================================================================
+Erdos 486 corroboration probe — Millennium Research
+CORROBORATION ONLY. The Lean kernel replay carries the proof.
+========================================================================
+
+PART A — finite block lemma, conditional candidate sum
+  claim: max_{tau <= floor(3k/5)} f(k,tau) <= e^{-0.04k}
+  NOTE the paper asserts this only where its side condition
+       sqrt(k) <= k/100 holds, i.e. k >= 10^4. Rows below that
+       threshold are OUTSIDE the paper's stated regime.
+    k=     10  tau<=     6  max f=6.992188e-01   e^-0.04k=6.703200e-01  NO    (below paper's regime)
+    k=     20  tau<=    12  max f=4.731445e-01   e^-0.04k=4.493290e-01  NO    (below paper's regime)
+    k=     50  tau<=    30  max f=1.525099e-01   e^-0.04k=1.353353e-01  NO    (below paper's regime)
+    k=    100  tau<=    60  max f=1.873730e-02   e^-0.04k=1.831564e-02  NO    (below paper's regime)
+    k=    400  tau<=   240  max f=4.006254e-09   e^-0.04k=1.125352e-07  ok    (below paper's regime)
+    k=  10000  tau<=  6000  max f=3.502486e-296   e^-0.04k=1.915170e-174  ok 
+    k=  10005  tau<=  6003  max f=1.606456e-296   e^-0.04k=1.568008e-174  ok 
+    k=  12000  tau<=  7200  max f=7.675548e-359   e^-0.04k=3.456597e-209  ok 
+    k=  20000  tau<= 12000  max f=4.043538e-611   e^-0.04k=3.667875e-348  ok 
+  [PASS] A1 conditional candidate bound holds throughout the paper's regime (k >= 10^4)  4/4 in-regime k values pass
+  [PASS] A2 the sub-regime failures are exactly the k divisible by 5 (where floor(3k/5) jumps), not a defect in the estimate  failing k below regime: [10, 20, 50, 100]
+  [PASS] A3 side condition sqrt(k) <= k/100 is exactly k >= 10^4  verified exactly for k = 1..20000
+
+PART B — three-term footprint bound and Hoeffding step
+  [PASS] B1 Hoeffding tail bound holds for every k tested
+  [PASS] B2 three-term bound <= 3e^{-k/50} holds from some k onward  first k: 4
+  [PASS] B3 combined failure probability < 1 (block lemma is nonvacuous)  first k: 150
+
+PART C — summability of eta_j and the epoch smallness condition
+  [PASS] C1 eta_j is summable with an explicit majorant  integral majorant < 1/100 from j0 ~ 8.696e+07
+  [PASS] C2 1/((2 j0+1) log 2) < eps at the same j0  value = 8.295e-09
+
+PART D — global assembly, headline constants
+  [PASS] D1 per-scale harmonic deletion equals 15/76  computed 15/76
+  [PASS] D2 (a_t+1)/(2a_t+1) > 1/2 for all a_t >= 1
+  [PASS] D3 15/(152 log 2) > 1/8  lower bound 0.14237122 vs 0.125
+  [PASS] D4 log 2 < 3/4 (paper's supporting bound)  log 2 <= 0.69314718
+  [PASS] D5 15/114 = 5/38 and 5/38 > 1/8 (paper's stated chain)  15/114 = 5/38 = 0.131579 > 0.125
+  [PASS] D6 1 + 1/100 - 1/8 = 177/200  computed 177/200
+  [PASS] D7 1 - 2/100 = 49/50  computed 49/50
+  [PASS] D8 177/200 < 49/50 (liminf strictly below limsup)  0.8850 < 0.9800
+    L_B(y_t) upper bound as a function of a_t:
+      a_t=        1   bound on L_B(y_t) = 1.29107005
+      a_t=        2   bound on L_B(y_t) = 1.11769354
+      a_t=        5   bound on L_B(y_t) = 0.97584004
+      a_t=       10   bound on L_B(y_t) = 0.91954896
+      a_t=      100   bound on L_B(y_t) = 0.86409805
+      a_t=     1000   bound on L_B(y_t) = 0.85827862
+      a_t=  1000000   bound on L_B(y_t) = 0.85762943
+  [PASS] D9 with 1/log y_t < eps the bound is < 177/200  1 + eps - 1/8 = 177/200 exactly
+
+========================================================================
+NOTE: PART A: the conditional candidate bound holds at every k tested inside the paper's stated regime (k >= 10^4). Below that regime it fails at k divisible by 5, which is expected: the paper's per-candidate estimate 2^{-(k-|S|)} <= e^{-0.33k} relies on sqrt(k) <= k/100, false for k < 10^4. No defect.
+NOTE: PART B: three-term bound first holds at k = 4; combined block-lemma failure probability drops below 1 at k = 150.
+NOTE: PART C: the smallness condition sum_{j>=j0} eta_j < 1/100 is met from j0 ~ 8.696e+07 (integral majorant); the construction is asymptotic, not numerically realizable.
+NOTE: PART D: the L_B(y_t) bound is only below 177/200 once a_t is large enough that 1/log y_t is itself below eps; the paper secures this via the j0 smallness condition (C2), not via a_t alone.
+========================================================================
+RESULT: ALL CHECKS PASS

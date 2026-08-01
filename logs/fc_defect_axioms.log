@@ -1,0 +1,4 @@
+'MR486Defect.fc_B_arbitrary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MR486Defect.fc_assertion_iff_all_sets' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MR486Defect.fc_thresholded_B_arbitrary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MR486Defect.fc_thresholded_iff_all_sets' depends on axioms: [propext, Classical.choice, Quot.sound]

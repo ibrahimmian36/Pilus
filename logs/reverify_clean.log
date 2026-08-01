@@ -1,0 +1,43 @@
+=== MR clean replay Sat Aug  1 15:59:47 PDT 2026 ===
+--- wiping Erdos486 build outputs (mathlib artifacts retained) ---
+--- lake build ---
+✔ [7885/7912] Built Erdos486.FiniteAveraging (102s)
+✔ [7886/7912] Built Erdos486.BiasedNumerics (102s)
+✔ [7887/7912] Built Erdos486.Statement (102s)
+✔ [7888/7912] Built Erdos486.PeriodicCounting (102s)
+✔ [7889/7912] Built Erdos486.Skeleton (102s)
+✔ [7890/7912] Built Erdos486.Survivors (138s)
+✔ [7891/7912] Built Erdos486.Analysis (138s)
+✔ [7892/7912] Built Erdos486.BiasedSkeleton (138s)
+✔ [7893/7912] Built Erdos486.FourColorTail (138s)
+✔ [7894/7912] Built Erdos486.LogBounds (138s)
+✔ [7895/7912] Built Erdos486.ColoringEnumeration (138s)
+✔ [7896/7912] Built Erdos486.Periodic (138s)
+✔ [7897/7912] Built Erdos486.BiasedSummability (51s)
+✔ [7898/7912] Built Erdos486.BiasedColoring (51s)
+✔ [7899/7912] Built Erdos486.BlockInterface (51s)
+✔ [7900/7912] Built Erdos486.BiasedGeometry (88s)
+✔ [7901/7912] Built Erdos486.BiasedFootprintAverage (91s)
+✔ [7902/7912] Built Erdos486.BiasedCollision (91s)
+✔ [7903/7912] Built Erdos486.Global (92s)
+✔ [7904/7912] Built Erdos486.BiasedCandidateGeometry (39s)
+✔ [7905/7912] Built Erdos486.BiasedCollisionUnion (39s)
+✔ [7906/7912] Built Erdos486.BiasedRecovery (41s)
+✔ [7907/7912] Built Erdos486.BiasedAnchorTail (27s)
+✔ [7908/7912] Built Erdos486.BiasedFiniteBlock (15s)
+✔ [7909/7912] Built Erdos486.BiasedInterface (30s)
+✔ [7910/7912] Built Erdos486.Main (29s)
+✔ [7911/7912] Built Erdos486 (7.4s)
+Build completed successfully (7912 jobs).
+=== build exit  Sat Aug  1 16:08:46 PDT 2026 ===
+
+=== MRAxioms ===
+'Erdos486.erdos486_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos486.erdos486_quantitativeCounterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+=== MRAxioms exit 0 ===
+
+=== AxiomSweep ===
+theorems swept: 492
+axiom union: [propext, Quot.sound, Classical.choice]
+AXIOM SWEEP PASS: union ⊆ [propext, Classical.choice, Quot.sound]
+=== AxiomSweep exit 0 ===

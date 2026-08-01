@@ -1,0 +1,41 @@
+=== escape scan Sat Aug  1 16:11:21 PDT 2026 ===
+--- forbidden tokens in 486 sources (Erdos486/ + Erdos486.lean) ---
+NONE FOUND
+
+--- all imports across the development ---
+Erdos486.Analysis
+Erdos486.BiasedAnchorTail
+Erdos486.BiasedCandidateGeometry
+Erdos486.BiasedCollision
+Erdos486.BiasedCollisionUnion
+Erdos486.BiasedColoring
+Erdos486.BiasedFiniteBlock
+Erdos486.BiasedFootprintAverage
+Erdos486.BiasedGeometry
+Erdos486.BiasedInterface
+Erdos486.BiasedNumerics
+Erdos486.BiasedRecovery
+Erdos486.BiasedSkeleton
+Erdos486.BiasedSummability
+Erdos486.BlockInterface
+Erdos486.ColoringEnumeration
+Erdos486.FiniteAveraging
+Erdos486.FourColorTail
+Erdos486.Global
+Erdos486.LogBounds
+Erdos486.Main
+Erdos486.Periodic
+Erdos486.PeriodicCounting
+Erdos486.Skeleton
+Erdos486.Statement
+Erdos486.Survivors
+Mathlib
+Mathlib.NumberTheory.Bertrand
+Mathlib.NumberTheory.Harmonic.Bounds
+
+--- sorryAx check in compiled env (both public theorems) ---
+(covered by MRAxioms: axiom lists contain no sorryAx)
+
+--- file/line census ---
+module count: 26
+total lines: 5490

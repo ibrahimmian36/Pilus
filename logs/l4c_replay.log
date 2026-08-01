@@ -1,0 +1,37 @@
+=== lean4checker per-module external replay Sat Aug  1 16:15:08 PDT 2026 ===
+lean4checker v4.27.0 commit 7df74851c95d9bd1bbb8fc9b51aeb291304faaf6
+NOTE: the single 27-module invocation was killed (exit 137, out of memory,
+      16 GB host). Replaying one module per process instead — same coverage.
+
+FAIL rc=137  Erdos486
+Searching for modules matching: [Erdos486]
+Found 27 modules to check
+PASS rc=0  Erdos486.Analysis
+PASS rc=0  Erdos486.BiasedAnchorTail
+PASS rc=0  Erdos486.BiasedCandidateGeometry
+PASS rc=0  Erdos486.BiasedCollision
+PASS rc=0  Erdos486.BiasedCollisionUnion
+PASS rc=0  Erdos486.BiasedColoring
+PASS rc=0  Erdos486.BiasedFiniteBlock
+PASS rc=0  Erdos486.BiasedFootprintAverage
+PASS rc=0  Erdos486.BiasedGeometry
+PASS rc=0  Erdos486.BiasedInterface
+PASS rc=0  Erdos486.BiasedNumerics
+PASS rc=0  Erdos486.BiasedRecovery
+PASS rc=0  Erdos486.BiasedSkeleton
+PASS rc=0  Erdos486.BiasedSummability
+PASS rc=0  Erdos486.BlockInterface
+PASS rc=0  Erdos486.ColoringEnumeration
+PASS rc=0  Erdos486.FiniteAveraging
+PASS rc=0  Erdos486.FourColorTail
+PASS rc=0  Erdos486.Global
+PASS rc=0  Erdos486.LogBounds
+PASS rc=0  Erdos486.Main
+PASS rc=0  Erdos486.Periodic
+PASS rc=0  Erdos486.PeriodicCounting
+PASS rc=0  Erdos486.Skeleton
+PASS rc=0  Erdos486.Statement
+PASS rc=0  Erdos486.Survivors
+
+modules checked: 27   failures: 1
+=== done Sat Aug  1 16:19:53 PDT 2026 ===

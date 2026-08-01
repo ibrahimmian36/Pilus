@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Erdős 486 maximal-verification BUILD pod.
-# Usage: COMPILER=gcc ./pod_build_486.sh   (or COMPILER=clang)
+# Usage: COMPILER=gcc ./pod_build.sh   (or COMPILER=clang)
 #
 # Self-contained Layer 7 bootstrap: pins every commit, builds the Lean
 # toolchain FROM SOURCE, rebuilds mathlib with NO cache, re-runs our three
@@ -29,14 +29,14 @@ OUT=$WORK/results
 mkdir -p "$WORK" "$OUT"
 
 # ---- PROVENANCE: archive the executed script BEFORE doing anything else ----
-cp -- "$0" "$OUT/pod_build_486.EXECUTED.sh" 2>/dev/null || true
-sha256sum -- "$0" > "$OUT/pod_build_486.EXECUTED.sha256" 2>/dev/null || true
+cp -- "$0" "$OUT/pod_build.EXECUTED.sh" 2>/dev/null || true
+sha256sum -- "$0" > "$OUT/pod_build.EXECUTED.sha256" 2>/dev/null || true
 
 MANIFEST=$OUT/MANIFEST.txt
 : > "$MANIFEST"
 note() { echo "[$(date -u +%FT%TZ)] $*" | tee -a "$MANIFEST"; }
-note "pod_build_486.sh compiler=$COMPILER cap=${WALL_CAP}s host=$(uname -mrs)"
-note "executed script archived to results/pod_build_486.EXECUTED.sh"
+note "pod_build.sh compiler=$COMPILER cap=${WALL_CAP}s host=$(uname -mrs)"
+note "executed script archived to results/pod_build.EXECUTED.sh"
 
 finish() {
   if [ "$SMOKE" = "1" ]; then return 0; fi

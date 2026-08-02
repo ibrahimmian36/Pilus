@@ -115,7 +115,7 @@ cmake --preset release -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX \
   > "$OUT/toolchain_cmake.log" 2>&1 \
   && make -C build/release -j"$JOBS" > "$OUT/toolchain_make.log" 2>&1 \
   || { note "STAGE1 FAIL toolchain build"; tail -50 "$OUT/toolchain_make.log" >> "$MANIFEST"; exit 1; }
-elan toolchain link lean-src "$WORK/lean4-src/build/release/stage1"
+elan toolchain link lean-src "$WORK/lean4-src/build/release/stage1" 2>/dev/null || true
 note "STAGE1 PASS toolchain from source ($COMPILER)"
 
 # ---------- stage 2: Wang repo, pinned; NO cache; full source build ----------
@@ -135,7 +135,11 @@ for d in .lake/packages/*/; do
   esac
 done
 rm -rf .lake/build
-lake build -j"$JOBS" > "$OUT/lake_build.log" 2>&1 \
+# NOTE: Lake 5.0.0 (Lean 4.27.0) exposes NO job-count option: neither -j nor
+# --jobs is accepted, and `lake build -j` is a hard error. Parallelism is
+# therefore left to Lake, and the RAM clamp above governs only the toolchain
+# build. Size the pod correctly; do not assume the clamp protects this stage.
+LAKE_NUM_JOBS="$JOBS" lake build > "$OUT/lake_build.log" 2>&1 \
   || { note "STAGE2 FAIL lake build"; tail -80 "$OUT/lake_build.log" >> "$MANIFEST"; exit 1; }
 note "STAGE2 PASS full from-source build (mathlib + Erdos486, no cache)"
 

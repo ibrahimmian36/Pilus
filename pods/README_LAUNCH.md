@@ -36,7 +36,10 @@ had ~23 GiB free. The 16 GB ceiling is also what killed the whole-namespace
    which inside a container reports the host's memory: on the first 486 run
    a 128 GB pod read 755 GB and the clamp did nothing. If the manifest logs
    `source=meminfo-HOST`, the clamp is not trustworthy and you should set
-   `JOBS_OVERRIDE` yourself.)
+   `JOBS_OVERRIDE` yourself. Note also that the clamp governs only the
+   **toolchain** build: Lake 5.0.0 accepts no job-count option, so the
+   mathlib stage runs at whatever parallelism Lake chooses. Size the pod for
+   that stage rather than relying on the clamp.)
 2. In the pod's web terminal, fetch the script and preflight. Preflight is
    cheap and catches every fetch problem before you pay for six hours:
 
@@ -44,6 +47,9 @@ had ~23 GiB free. The 16 GB ceiling is also what killed the whole-namespace
    curl -sL https://raw.githubusercontent.com/ibrahimmian36/Pilus/main/pods/pod_build.sh -o pod_build.sh
    SMOKE=1 bash pod_build.sh
    ```
+
+   Rerunning is safe and cheap: the toolchain clone and build are both
+   incremental, so a second run picks up where the first stopped.
 
    Expect `SMOKE PASS`. It verifies the lean4 tag clones, cmake configures,
    Wang's repo checks out at the pinned commit, the mathlib pin matches, and

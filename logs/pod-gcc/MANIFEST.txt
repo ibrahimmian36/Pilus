@@ -1,0 +1,51 @@
+[2026-08-02T17:16:04Z] pod_build.sh compiler=gcc cap=43200s host=Linux 6.8.0-45-generic x86_64
+[2026-08-02T17:16:04Z] executed script archived to results/pod_build.EXECUTED.sh
+[2026-08-02T17:16:07Z] STAGE0 PASS deps
+[2026-08-02T17:16:07Z] cores=32 ram=119GB (source=cgroup) jobs=32
+[2026-08-02T17:16:10Z] STAGE1 PASS toolchain from source (gcc)
+[2026-08-02T17:16:10Z] STAGE2 no-cache purge done (cache get is never invoked)
+[2026-08-02T17:40:25Z] STAGE2 PASS full from-source build (mathlib + Erdos486, no cache)
+[2026-08-02T17:40:34Z] STAGE3 PASS MRAxioms
+[2026-08-02T17:40:42Z] STAGE3 PASS AxiomSweep
+L4C PASS module Erdos486
+L4C PASS module Erdos486.Analysis
+L4C PASS module Erdos486.BiasedAnchorTail
+L4C PASS module Erdos486.BiasedCandidateGeometry
+L4C PASS module Erdos486.BiasedCollision
+L4C PASS module Erdos486.BiasedCollisionUnion
+L4C PASS module Erdos486.BiasedColoring
+L4C PASS module Erdos486.BiasedFiniteBlock
+L4C PASS module Erdos486.BiasedFootprintAverage
+L4C PASS module Erdos486.BiasedGeometry
+L4C PASS module Erdos486.BiasedInterface
+L4C PASS module Erdos486.BiasedNumerics
+L4C PASS module Erdos486.BiasedRecovery
+L4C PASS module Erdos486.BiasedSkeleton
+L4C PASS module Erdos486.BiasedSummability
+L4C PASS module Erdos486.BlockInterface
+L4C PASS module Erdos486.ColoringEnumeration
+L4C PASS module Erdos486.FiniteAveraging
+L4C PASS module Erdos486.FourColorTail
+L4C PASS module Erdos486.Global
+L4C PASS module Erdos486.LogBounds
+L4C PASS module Erdos486.Main
+L4C PASS module Erdos486.Periodic
+L4C PASS module Erdos486.PeriodicCounting
+L4C PASS module Erdos486.Skeleton
+L4C PASS module Erdos486.Statement
+L4C PASS module Erdos486.Survivors
+[2026-08-02T17:46:51Z] STAGE4a PASS lean4checker all Erdos486 modules
+L4C PASS Erdos486
+L4C PASS Batteries
+L4C PASS Aesop
+L4C PASS Qq
+L4C PASS ProofWidgets
+L4C PASS Plausible
+L4C PASS ImportGraph
+L4C FAIL rc=1 Cli
+L4C PASS LeanSearchClient
+L4C PASS Mathlib
+[2026-08-02T18:31:56Z] STAGE4b PARTIAL lean4checker umbrella (see per-pattern lines)
+[2026-08-02T18:31:57Z] STAGE5 PASS digests recorded
+[2026-08-02T18:31:57Z] ALL STAGES COMPLETE compiler=gcc
+[2026-08-02T18:31:57Z] packaging results

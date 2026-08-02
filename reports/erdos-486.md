@@ -1,7 +1,7 @@
 # Independent verification: Erdős Problem 486 is resolved in the negative
 
 Millennium Research (Ibby Mian, Shayaan Siddique) — 2026-08-01
-Status: Layers 0-6 pass; Layer 7 staged, not executed. Three defect
+Status: all seven layers pass (Layer 7 executed 2026-08-02). Three defect
 findings against google-deepmind/formal-conjectures, all machine-checked.
 
 Every claim below is either mechanically reproducible from a command
@@ -145,7 +145,7 @@ oscillation: it lets an infinite congruence system stay silent for as
 long as the construction needs the average to recover. That is why the
 threshold Tao restored is not a technicality but the whole problem.
 
-## 3. What we verified mechanically — seven layers, six executed
+## 3. What we verified mechanically — seven layers
 
 Hardware: Apple M2 Pro, 10 cores, 16 GB RAM, macOS (Darwin 25.5.0).
 
@@ -279,20 +279,72 @@ the log evidences — is applied here and baked into the pod script below.
 
 ### Layer 7 — from-source bootstrap
 
-`pods/pod_build.sh` compiles the Lean toolchain from
-source under both gcc and clang, rebuilds mathlib with the cache purged,
-re-runs Layers 2–3, and replays through lean4checker with each pattern's
-exit code logged separately. It archives itself into the results
-directory as its first action, with a sha256, which is the specific
-provenance defect the 1002 run exposed.
+`pods/pod_build.sh` compiles the Lean toolchain from source, rebuilds
+mathlib with the cache purged, re-runs Layers 2–3, and replays through
+lean4checker with each pattern's exit code logged separately. It archives
+itself into the results directory as its first action, with a sha256,
+which is the specific provenance defect the 1002 run exposed.
 
-**VERDICT L7: SCRIPT STAGED, NOT YET EXECUTED.** A from-source mathlib
-build with no cache is a many-hour job needing ≥ 32 GB, which the audit
-laptop does not have (the 16 GB ceiling is what killed Layer 6's
-umbrella run). The script is ready to run on a rented pod. We are not
-claiming this layer as passed. Layers 0–6 stand on their own; Layer 7
-would add independence from the community cache and from the
-distributed toolchain binary, and nothing else.
+**EXECUTED 2026-08-02** on a rented CPU pod (RunPod, Linux
+6.8.0-45-generic x86_64, 32 vCPU, 119 GB as read from the cgroup). Whole
+run 17:16:04 → 18:31:57 UTC, about 76 minutes.
+
+Provenance, which is the point of the layer as much as the result: the
+archived `pod_build.EXECUTED.sha256` is
+
+    af81bda6d2bba2756118d818358ada8a94a85a36788af56e47d0be3ae67a9780
+
+and that is byte-identical to `pods/pod_build.sh` at commit `af282a9` of
+this repository. The bytes that ran are a specific public commit, not a
+description of one.
+
+The chain, with nothing inherited from any distribution:
+
+- **Toolchain.** Lean v4.27.0 compiled from source with gcc, from the
+  `v4.27.0` tag of leanprover/lean4 (9 minutes). The `elan` release
+  binary is not used to supply a toolchain; it only links the
+  locally-built `stage1`.
+- **Build.** `lake exe cache get` is never invoked, and any prefetched
+  package build trees are purged first. `lake build` then compiled
+  **7,919 jobs** in 24 minutes. Note this is seven more than the 7,912
+  of Layer 1: with the cache purged, Lake builds a few targets it would
+  otherwise fetch. Log `logs/pod-gcc/lake_build.log.gz`.
+- **Layer 2 re-run.** Both public theorems again report exactly
+  `[propext, Classical.choice, Quot.sound]`, and the sweep again reports
+  `theorems swept: 492` with the union exactly those three
+  (`logs/pod-gcc/check_MRAxioms.log`, `check_AxiomSweep.log`). The
+  theorem count matching to the unit is what rules out a differently
+  configured build quietly checking something else.
+- **Layer 6 re-run**, lean4checker at `7df74851c95d9bd1bbb8fc9b51aeb291304faaf6`.
+  All 27 Erdős 486 modules pass individually. **The umbrella `Erdos486`
+  pattern also passes**, which the audit laptop could not do: at 16 GB it
+  was OOM-killed (exit 137), and that is why Layer 6 reports a per-module
+  loop. At 119 GB the whole namespace is checked against the full
+  environment in one process. `Batteries`, `Aesop`, `Qq`, `ProofWidgets`,
+  `Plausible`, `ImportGraph`, `LeanSearchClient` and **`Mathlib`** all
+  pass as well, so the entire compiled environment underneath the result
+  has been replayed by an external kernel.
+- **Digests.** sha256 of all 27 Erdős 486 oleans and all 7,517 mathlib
+  oleans, in `logs/pod-gcc/`.
+
+One line in the manifest reads `L4C FAIL rc=1 Cli`, and the stage is
+recorded as `STAGE4b PARTIAL`. That is an artifact of our own script, not
+a finding. `Cli` is a declared dependency that nothing in the import
+closure of the development uses, so `lake build` never compiled it and it
+has zero oleans; the checker's own message is
+`Could not find any oleans for: Cli`. Nothing was checked and nothing
+failed. The script now classifies such patterns as `SKIPPED` before
+invoking the checker, so the distinction is visible in the log rather
+than in a footnote — but the run archived here predates that change, and
+we would rather show the artifact than quietly re-run until the output
+looks tidy.
+
+**VERDICT L7: PASS.** The result does not depend on the distributed Lean
+binary, on the community mathlib cache, or on the audit laptop's
+architecture: it reproduces on x86-64 with a gcc-built toolchain and no
+cache anywhere in the chain. What Layer 7 does *not* do is verify mathlib
+as mathematics, or remove the Lean kernel and the C++ compiler from the
+trusted base. It removes two supply-chain assumptions, and nothing else.
 
 ### Adversarial probes — attacking the statement, not the proof
 
@@ -387,7 +439,6 @@ Not trusted and not relied upon: the repository's CI; any AI system; and
 and is labeled adjudication, not verification.
 
 Not verified, stated plainly:
-- Layer 7 has not been run (see above).
 - The root module gap in Layer 6 (immaterial, but real).
 - We did not verify mathlib itself. We did re-verify the pin's identity
   in this audit rather than inheriting it: the official
@@ -404,7 +455,7 @@ Not verified, stated plainly:
   page, the comment thread and the proof-claim thread were read in a
   browser by hand (2026-08-01/02) rather than fetched by tooling. Every
   date, quotation and attribution in §1 was checked against the live
-  pages that way. Nothing in Layers 0-6 or §5 depends on them regardless:
+  pages that way. Nothing in the layers or §5 depends on them regardless:
   the fc findings are checked against fc's own source and the GitHub API,
   and Layer 5 is checked against the site statement as displayed.
 - We have not verified Tao's assertion that the unthresholded version

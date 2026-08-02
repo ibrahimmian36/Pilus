@@ -100,7 +100,7 @@ statement, and it should not be recorded as doing so.**
 
 | Path | What it is |
 |---|---|
-| `reports/erdos-486.md` | The verification report: seven layers (six executed), the counterexample mechanism, the trust base, and what we did *not* verify |
+| `reports/erdos-486.md` | The verification report: all seven layers, the counterexample mechanism, the trust base, and what we did *not* verify |
 | `tools/MRAxioms.lean` | The axiom manifest: `#print axioms` on both public theorems |
 | `tools/escape_scan.py` | Escape-token scan that strips Lean comments and string literals first. A plain grep flags the English word "admit" in a docstring and fails a clean repository; nested block comments rule out doing this with a regex |
 | `tools/AxiomSweep.lean` | Our mechanical sweep: every theorem in the compiled namespace via `CollectAxioms`, one memoized closure walk, so nothing hides behind a hand-kept manifest (492 theorems) |
@@ -109,7 +109,7 @@ statement, and it should not be recorded as doing so.**
 | `fc-fix/486.lean` | The corrected formal-conjectures file, compiling at `735aee07` |
 | `tools/MR486FixCheck.lean` | Machine-checked proof that the fix *closes* the hole: with the `0 < n` guard, row `X 0` is provably never consulted |
 | `probes/probe486.py` | Exact-rational corroboration of the block lemma's constants and the global assembly arithmetic, independent of the Lean development |
-| `pods/pod_build.sh` | The from-source bootstrap: Lean toolchain compiled from source, mathlib rebuilt with no cache, checks re-run, `lean4checker` replay. **Staged, not executed** — see below |
+| `pods/pod_build.sh` | The from-source bootstrap: Lean toolchain compiled from source, mathlib rebuilt with no cache, checks re-run, `lean4checker` replay. **Executed 2026-08-02**; transcripts in `logs/pod-gcc/` |
 | `logs/` | The replay, escape scan, per-module `lean4checker` run, probe output, and the defect certificate's axioms |
 | `.github/workflows/reverify.yml` | Weekly re-run of the audit against the pinned commit. Fails if the pin moves, the mathlib rev changes, an escape token appears, the axiom manifest changes, or the swept theorem count is no longer 492 |
 

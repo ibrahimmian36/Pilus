@@ -1,0 +1,4 @@
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+'Erdos486.erdos486_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos486.erdos486_quantitativeCounterexample' depends on axioms: [propext, Classical.choice, Quot.sound]

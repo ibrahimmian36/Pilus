@@ -1,0 +1,196 @@
+=== per-module Erdos486 (primary) ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486]
+Found 27 modules to check
+L4C PASS module Erdos486
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.Analysis]
+Found 1 modules to check
+L4C PASS module Erdos486.Analysis
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedAnchorTail]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedAnchorTail
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedCandidateGeometry]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedCandidateGeometry
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedCollision]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedCollision
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedCollisionUnion]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedCollisionUnion
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedColoring]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedColoring
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedFiniteBlock]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedFiniteBlock
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedFootprintAverage]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedFootprintAverage
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedGeometry]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedGeometry
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedInterface]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedInterface
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedNumerics]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedNumerics
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedRecovery]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedRecovery
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedSkeleton]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedSkeleton
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BiasedSummability]
+Found 1 modules to check
+L4C PASS module Erdos486.BiasedSummability
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.BlockInterface]
+Found 1 modules to check
+L4C PASS module Erdos486.BlockInterface
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.ColoringEnumeration]
+Found 1 modules to check
+L4C PASS module Erdos486.ColoringEnumeration
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.FiniteAveraging]
+Found 1 modules to check
+L4C PASS module Erdos486.FiniteAveraging
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.FourColorTail]
+Found 1 modules to check
+L4C PASS module Erdos486.FourColorTail
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.Global]
+Found 1 modules to check
+L4C PASS module Erdos486.Global
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.LogBounds]
+Found 1 modules to check
+L4C PASS module Erdos486.LogBounds
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.Main]
+Found 1 modules to check
+L4C PASS module Erdos486.Main
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.Periodic]
+Found 1 modules to check
+L4C PASS module Erdos486.Periodic
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.PeriodicCounting]
+Found 1 modules to check
+L4C PASS module Erdos486.PeriodicCounting
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.Skeleton]
+Found 1 modules to check
+L4C PASS module Erdos486.Skeleton
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.Statement]
+Found 1 modules to check
+L4C PASS module Erdos486.Statement
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486.Survivors]
+Found 1 modules to check
+L4C PASS module Erdos486.Survivors
+=== pattern: Erdos486 ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Erdos486]
+Found 27 modules to check
+L4C PASS Erdos486
+=== pattern: Batteries ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Batteries]
+Found 173 modules to check
+L4C PASS Batteries
+=== pattern: Aesop ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Aesop]
+Found 135 modules to check
+L4C PASS Aesop
+=== pattern: Qq ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Qq]
+Found 14 modules to check
+L4C PASS Qq
+=== pattern: ProofWidgets ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [ProofWidgets]
+Found 36 modules to check
+L4C PASS ProofWidgets
+=== pattern: Plausible ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Plausible]
+Found 11 modules to check
+L4C PASS Plausible
+=== pattern: ImportGraph ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [ImportGraph]
+Found 3 modules to check
+L4C PASS ImportGraph
+=== pattern: Cli ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Cli]
+uncaught exception: Could not find any oleans for: Cli
+L4C FAIL rc=1 Cli
+=== pattern: LeanSearchClient ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [LeanSearchClient]
+Found 4 modules to check
+L4C PASS LeanSearchClient
+=== pattern: Mathlib ===
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+Searching for modules matching: [Mathlib]
+Found 7517 modules to check
+L4C PASS Mathlib

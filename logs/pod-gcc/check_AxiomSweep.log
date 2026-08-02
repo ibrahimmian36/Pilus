@@ -1,0 +1,5 @@
+note: using toolchain 'lean-src' from override set on '/workspace/audit486/wang_repo/486/lean'
+note: to remove: elan override unset --path '/workspace/audit486/wang_repo/486/lean' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+theorems swept: 492
+axiom union: [propext, Quot.sound, Classical.choice]
+AXIOM SWEEP PASS: union ⊆ [propext, Classical.choice, Quot.sound]

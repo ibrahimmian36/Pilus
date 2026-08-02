@@ -551,3 +551,25 @@ Our audit code — `tools/MRAxioms.lean`, `tools/AxiomSweep.lean`,
 vendored, as his repository carries no license.
 
 All logs quoted above are in `logs/` of this repository.
+
+
+---
+
+## Addendum (2026-08-02): kernel advisories and tooling errata
+
+**Kernel soundness advisories.** Lean 4 kernel soundness bugs #14576 and
+#14484 (July 2026) permit axiom-free proofs of False invisible to
+`#print axioms`, reachable only via kernel-direct metaprogramming; the
+audited toolchain predates the fixes, and same-kernel replays
+(lean4checker/lean4lean) do not detect the class. Checked 2026-08-02:
+the audited Erdos486 development contains **zero kernel-direct
+metaprogramming constructs** (no `run_cmd`, `run_elab`, `addDecl`,
+`setEnv`/`modifyEnv`, `initialize`); its type declarations use ordinary
+frontend syntax. No path to the bug class; this report's verdict is
+unaffected.
+
+**Tooling errata.** The archived `tools/AxiomSweep.lean` is frozen
+as-run and lacks a zero-theorem guard (a reuser with a mistyped
+namespace would get a vacuous PASS). The shipped logs show
+`theorems swept: 492`, so the defect did not affect these results. A
+hardened successor lives in our audit kit.

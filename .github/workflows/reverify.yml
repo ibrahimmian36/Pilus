@@ -1,0 +1,96 @@
+name: reverify
+
+# Re-runs the audit against the pinned commit of the audited development.
+# A verification that is never re-checked decays into a claim, so this runs
+# weekly and on any change to our own tooling. It fails loudly if the axiom
+# manifest, the swept theorem count, or the pin itself ever moves.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"
+  push:
+    paths:
+      - "tools/**"
+      - ".github/workflows/reverify.yml"
+
+permissions:
+  contents: read
+
+env:
+  PIN: 61325b10bbdc29f4fb5e0618b414b9f2189333ad
+  MATHLIB_REV: a3a10db0e9d66acbebf76c5e6a135066525ac900
+
+jobs:
+  reverify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install elan
+        run: |
+          curl -sSf https://elan.lean-lang.org/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Clone the audited development at the pinned commit
+        run: |
+          git clone --filter=blob:none https://github.com/ShouqiaoW/erdos wang
+          git -C wang checkout "$PIN"
+          got=$(git -C wang rev-parse HEAD)
+          echo "HEAD=$got"
+          [ "$got" = "$PIN" ] || { echo "::error::pin mismatch"; exit 1; }
+
+      - name: Confirm the mathlib pin is unchanged
+        run: |
+          grep -q "$MATHLIB_REV" wang/486/lean/lake-manifest.json \
+            || { echo "::error::mathlib rev in the manifest is not the audited one"; exit 1; }
+
+      - name: Escape scan (no sorry, no native_decide, no bespoke axiom)
+        run: |
+          cd wang/486/lean
+          if grep -rnE '\b(sorry|admit|native_decide|ofReduceBool|trustCompiler)\b|^[[:space:]]*(axiom|opaque)\b' \
+               Erdos486.lean Erdos486/ ; then
+            echo "::error::escape token found in the audited source"; exit 1
+          fi
+          echo "escape scan clean"
+
+      - name: Build the audited development
+        working-directory: wang/486/lean
+        run: |
+          lake exe cache get
+          lake build
+
+      - name: Axiom manifest — both public theorems
+        working-directory: wang/486/lean
+        run: |
+          cp "$GITHUB_WORKSPACE/tools/MRAxioms.lean" .
+          lake env lean MRAxioms.lean | tee manifest.txt
+          expected='depends on axioms: [propext, Classical.choice, Quot.sound]'
+          for thm in erdos486_negative erdos486_quantitativeCounterexample; do
+            grep -qF "'Erdos486.$thm' $expected" manifest.txt \
+              || { echo "::error::$thm no longer has exactly the three standard axioms"; exit 1; }
+          done
+          echo "axiom manifest reproduced"
+
+      - name: Axiom sweep — every theorem in the namespace
+        working-directory: wang/486/lean
+        run: |
+          cp "$GITHUB_WORKSPACE/tools/AxiomSweep.lean" .
+          lake env lean AxiomSweep.lean | tee sweep.txt
+          grep -q "AXIOM SWEEP PASS" sweep.txt \
+            || { echo "::error::axiom sweep failed"; exit 1; }
+          grep -q "theorems swept: 492" sweep.txt \
+            || { echo "::error::swept theorem count changed; the report says 492"; exit 1; }
+          echo "sweep reproduced: 492 theorems, axioms clean"
+
+      - name: Upload transcripts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reverify-logs
+          path: |
+            wang/486/lean/manifest.txt
+            wang/486/lean/sweep.txt
+          if-no-files-found: warn

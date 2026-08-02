@@ -126,15 +126,23 @@ git rev-parse HEAD > "$OUT/wang_head.txt"
 cd 486/lean
 elan override set lean-src
 grep -q "$MATHLIB_REV" lake-manifest.json || { note "STAGE2 FAIL mathlib pin mismatch"; exit 1; }
-# NO cache: purge any prefetched build artifacts. ProofWidgets' fetched release
-# is retained (UI/JS bundle); its oleans are re-kernel-checked in stage 4.
+# NO cache. Two things make this true: we never invoke `lake exe cache get`,
+# and we purge any prefetched artifacts that a warm checkout might carry.
+# On a FRESH clone .lake/packages does not exist yet (deps are fetched by the
+# build itself), so the loop below legitimately matches nothing — nullglob
+# keeps it from degenerating into a literal unexpanded pattern, which is what
+# it did on the first 486 pod run. ProofWidgets' fetched release is retained
+# (a UI/JS bundle); its oleans are re-kernel-checked in stage 4.
+shopt -s nullglob
 for d in .lake/packages/*/; do
   case "$(basename "$d")" in
     proofwidgets|ProofWidgets) ;;
     *) rm -rf "${d}.lake/build" ;;
   esac
 done
+shopt -u nullglob
 rm -rf .lake/build
+note "STAGE2 no-cache purge done (cache get is never invoked)"
 # NOTE: Lake 5.0.0 (Lean 4.27.0) exposes NO job-count option: neither -j nor
 # --jobs is accepted, and `lake build -j` is a hard error. Parallelism is
 # therefore left to Lake, and the RAM clamp above governs only the toolchain

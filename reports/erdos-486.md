@@ -38,8 +38,10 @@ fc's own definitions (§5).
 
 ## 1. What was claimed, and by whom
 
-Erdős Problem 486 (erdosproblems.com/486; [Er80], also [Er61]
-pp. 235–236, condition (I.26.1); site status at audit time OPEN). Let
+Erdős Problem 486 (erdosproblems.com/486; the site's own reference line
+is [Er61, p.235] [Er80, p.114]; the activation condition appears as
+b ≥ a_i in condition (I.26.1) of [Er61]; site status at audit time OPEN,
+with one claimed proof and eight comments). Let
 A ⊆ ℕ, and for each n ∈ A choose X_n ⊆ ℤ/nℤ. Put
 
     B = { m ∈ ℕ : m mod n ∉ X_n for every n ∈ A with n < m }.

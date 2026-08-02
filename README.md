@@ -63,8 +63,9 @@ Independently of Wang's work, and this would stand if his claim were
 withdrawn tomorrow. The `m > n` activation delay is not a technicality —
 it is what lets an infinite congruence system stay silent long enough
 for the logarithmic average to recover, which is what makes the
-oscillation possible. Terence Tao restored that condition to the problem
-statement in January 2026, after Liam Price asked whether it belonged.
+oscillation possible. Liam Price asked in January 2026 whether the
+condition belonged; Terence Tao inspected Erdős's 1961 paper, confirmed
+that it does, and the site was corrected the same day.
 
 [`FormalConjectures/ErdosProblems/486.lean`](https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/486.lean)
 still omits it, six months and three edits later. It also places no

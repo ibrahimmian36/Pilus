@@ -53,13 +53,17 @@ fail there. The problem generalizes Erdős #25, the case |X_n| = 1.
 Erdős: "perhaps this question is not very difficult as far as I know it
 has not been attacked really seriously."
 
-**The m > n activation delay is the crux.** On 2026-01-11 Liam Price
-asked on the problem thread whether the site's statement was right,
-since GPT-5.2 had claimed a solution to a version with no activation
-threshold. Terence Tao checked [Er61] the same day, confirmed the
-threshold (b ≥ a_i in (I.26.1)), and observed that without it one can
+**The m > n activation delay is the crux.** On 2026-01-11 at 17:08 Liam
+Price (username Leeham) asked on the problem thread whether the site's
+statement was right, since GPT-5.2 claimed a solution to a version with
+no activation threshold. Terence Tao replied at 17:42. Two distinct
+things happened in that reply, and they are worth keeping apart: Tao
+inspected [Er61, p.236] himself and confirmed the threshold is there
+(b ≥ a_i in (I.26.1)) — that is his own verification; and he relayed,
+without disputing, GPT-5.2's claim that without the condition one can
 cheaply disrupt the logarithmic density with sparse congruence
-conditions. The site was corrected that day.
+conditions — that claim originates with the model, not with Tao. The
+site was updated the same day to add the condition.
 
 Claim under audit: **Shouqiao Wang**, proof-claim listed 2026-07-16
 02:50 UTC, "found through my AI pipeline and generated almost entirely
@@ -316,7 +320,12 @@ normalization that is accidentally right only at period 2. The fourth is a
 genuine admissible instance of the problem itself — the delayed even-sieve
 `A = {2}`, `X₂ = {0}` — and it *does* have a logarithmic density, so
 `Erdos486Assertion` is not refuted by a simple congruence system and the
-counterexample has to earn its keep.
+counterexample has to earn its keep. This last point agrees with an
+observation already on the problem thread: on 2025-10-16 the commenter
+Woett noted that for *finite* A the problem collapses to a single modulus,
+the lcm of the elements, and B then has even a natural density. Our probe
+reaches the same conclusion from the other direction. Any counterexample
+must therefore use infinitely many moduli, as Wang's does.
 
 Two further points we checked by hand rather than by compiling. First,
 Wang's `Erdos486Assertion` requires `0 ∉ A`, which is what closes the
@@ -414,7 +423,8 @@ At fc commit `735aee074327b8e78b0d92bb1ee8ea00937c3f51` (checked
 
 **Defect A — the activation threshold is missing.** There is no `m > n`
 condition, and the docstring drops "with m > n" as well. This is the
-condition Tao restored to the site on 2026-01-11. The file's full commit
+condition Tao identified as missing on 2026-01-11, after which the site
+was corrected. The file's full commit
 history, verified through the GitHub API:
 
     d4863de138  2025-12-29  feat(ErdosProblems/486): …

@@ -158,7 +158,9 @@ coverage a report may claim.
 ## Attribution
 
 The audited formalization is © its author and is **not** redistributed
-here; at the audited commit `ShouqiaoW/erdos` carried no license file.
+here; at the audited commit `ShouqiaoW/erdos` carried no license file. It
+has since been placed under the MIT License (© 2026 Shouqiao Wang), so the
+audited development is now reusable at its current head.
 The formal-conjectures statements transcribed in `tools/MR486Defect.lean`
 are from
 [formal-conjectures](https://github.com/google-deepmind/formal-conjectures)

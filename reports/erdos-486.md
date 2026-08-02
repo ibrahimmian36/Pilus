@@ -411,9 +411,13 @@ Not verified, stated plainly:
   admits cheap counterexamples. We did not need to: our fc findings in
   §5 are stronger, independent of it, and machine-checked.
 
-Repository caveat: ShouqiaoW/erdos carries **no LICENSE file** at the
-audited commit. We therefore vendor none of its source. Everything we
-publish is our own audit code, plus quotation for the purpose of review.
+Repository licence: at the audited commit `61325b1` ShouqiaoW/erdos carried
+**no LICENSE file**, so we vendored none of its source and this repository
+still contains none; everything published here is our own audit code, plus
+quotation for the purpose of review. The repository has since been placed
+under the **MIT License** (© 2026 Shouqiao Wang, added 2026-08-02), which
+does not change what we publish but does mean others may now reuse the
+audited development directly.
 
 ## 5. Finding: the formal-conjectures statement of 486 is defective, and the obvious fix does not repair it
 

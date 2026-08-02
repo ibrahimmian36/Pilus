@@ -82,9 +82,13 @@ rather than the narrative:
   because it is the result we came for and a wall-cap hit during the
   umbrella patterns must not cost it. Then the umbrella patterns, each with
   its own 90-minute cap (`L4C_PAT_CAP`). Every line carries its own exit
-  code: `L4C PASS <pat>`, `L4C FAIL rc=<n> <pat>`, or `L4C TIMEOUT <pat> —
-  NOT CHECKED`. **Claim coverage only for lines that say PASS.** A TIMEOUT
-  is not a pass and not a failure; it means that pattern was not checked.
+  code: `L4C PASS <pat>`, `L4C FAIL rc=<n> <pat>`, `L4C TIMEOUT <pat> — NOT
+  CHECKED`, or `L4C SKIPPED <pat> — no oleans built`. **Claim coverage only
+  for lines that say PASS.** A TIMEOUT is neither a pass nor a failure: that
+  pattern was not checked. A SKIPPED means the package is a declared
+  dependency that nothing in the audited development imports, so it was
+  never compiled and there is nothing to check — the 486 run hit this on
+  `Cli`, which has zero oleans.
   On the 1002 run the script looped ten patterns but the log evidenced one,
   and the report had to be walked back.
 - `check_MRAxioms.log` and `check_AxiomSweep.log` — expect the same output

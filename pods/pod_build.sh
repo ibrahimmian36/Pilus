@@ -225,6 +225,16 @@ done
 # pattern hit its timeout and was NOT checked — do not report it as passing.
 for PAT in Erdos486 Batteries Aesop Qq ProofWidgets Plausible ImportGraph Cli LeanSearchClient Mathlib; do
   echo "=== pattern: $PAT ===" >> "$OUT/lean4checker_full.log"
+  # A declared dependency that nothing in the audited development imports is
+  # never compiled by `lake build`, so lean4checker exits 1 on a package that
+  # simply is not on disk. That is not a soundness signal and must not be
+  # logged as a failure. The Erdos 486 run hit exactly this on `Cli`, which
+  # has zero oleans because no module in the import closure uses it.
+  if [ -z "$(find .lake -path "*lib/lean/${PAT}*" -name '*.olean' -print -quit 2>/dev/null)" ]; then
+    echo "L4C SKIPPED $PAT — no oleans built; not in the import closure" \
+      | tee -a "$OUT/lean4checker_full.log" >> "$MANIFEST"
+    continue
+  fi
   if timeout "$L4C_PAT_CAP" lake env "$L4C" "$PAT" >> "$OUT/lean4checker_full.log" 2>&1; then
     echo "L4C PASS $PAT" | tee -a "$OUT/lean4checker_full.log" >> "$MANIFEST"
   else

@@ -1,5 +1,9 @@
 # Erdős #486: independent kernel-level verification of a negative answer
 
+[![reverify](https://github.com/ibrahimmian36/Pilus/actions/workflows/reverify.yml/badge.svg)](https://github.com/ibrahimmian36/Pilus/actions/workflows/reverify.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![axioms](https://img.shields.io/badge/axioms-propext%20%7C%20Classical.choice%20%7C%20Quot.sound-success)](reports/erdos-486.md)
+
 Third-party verification of a claimed resolution of
 [Erdős #486](https://www.erdosproblems.com/486): *let A ⊆ ℕ and choose
 X_n ⊆ ℤ/nℤ for each n ∈ A; let*
@@ -106,6 +110,7 @@ statement, and it should not be recorded as doing so.**
 | `probes/probe486.py` | Exact-rational corroboration of the block lemma's constants and the global assembly arithmetic, independent of the Lean development |
 | `pods/pod_build.sh` | The from-source bootstrap: Lean toolchain compiled from source, mathlib rebuilt with no cache, checks re-run, `lean4checker` replay. **Staged, not executed** — see below |
 | `logs/` | The replay, escape scan, per-module `lean4checker` run, probe output, and the defect certificate's axioms |
+| `.github/workflows/reverify.yml` | Weekly re-run of the audit against the pinned commit. Fails if the pin moves, the mathlib rev changes, an escape token appears, the axiom manifest changes, or the swept theorem count is no longer 492 |
 
 ## Check it yourself
 
@@ -130,6 +135,11 @@ lake env lean AxiomSweep.lean   # our sweep: 492 theorems
 Each prints `depends on axioms: [propext, Classical.choice, Quot.sound]`,
 and the sweep prints `AXIOM SWEEP PASS`. Expected output is quoted
 verbatim in the report.
+
+You do not have to take our word that this still holds. The `reverify`
+workflow above runs exactly these steps weekly against the pinned commit
+and fails loudly if any of them stops reproducing, so the badge reflects a
+live check rather than a claim made once in August 2026.
 
 The external `lean4checker` replay must be run **one module per
 process**. The umbrella pattern is a prefix match: it pulls in all 27

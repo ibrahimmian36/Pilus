@@ -65,16 +65,26 @@ cheaply disrupt the logarithmic density with sparse congruence
 conditions — that claim originates with the model, not with Tao. The
 site was updated the same day to add the condition.
 
-Claim under audit: **Shouqiao Wang**, proof-claim listed 2026-07-16
-02:50 UTC, "found through my AI pipeline and generated almost entirely
-by GPT-5.6 Sol", answer NO; repo github.com/ShouqiaoW/erdos, directory
-`486/`. Thomas Bloom replied on the claim thread 2026-07-16 07:09 that
-the strategy seemed plausible, but that for a delicate ad hoc
-construction resting on quantitative estimates he was inclined to wait
-for a formalized version rather than check the details line by line.
-Wang posted the Lean formalization on 2026-07-17. This report is the
-check Bloom said he was waiting for. Before it, there was no
-third-party verification of the claim.
+Claim under audit: **Shouqiao Wang**, proof-claim submitted 2026-07-16
+02:50:25, answer NO; repo github.com/ShouqiaoW/erdos, directory `486/`.
+He discloses it was "found through my AI pipeline and was generated
+almost entirely by GPT-5.6 Sol", and states that he has personally read
+and checked it. Thomas Bloom replied on the claim thread at 07:09 the
+same day: the statement and strategy seemed plausible to him, but for a
+proof with no easily digestible big idea, rather a delicate ad hoc
+construction relying on quantitative estimates, he was inclined to wait
+for a formalised version rather than check the line by line details
+himself. Wang posted the Lean formalization at 08:46 on 2026-07-17,
+stating that it compiles under Lean 4.27.0 with mathlib and proves the
+negative answer with no `sorry` and no axioms beyond Lean's standard
+foundations. This report is the check Bloom said he was waiting for, and
+it confirms Wang's own description of his artifact.
+
+At audit time the claim thread carried exactly two comments — Bloom's and
+Wang's — so no third party had examined the proof. The site states this
+itself: appearing on the proof-claim page is no guarantee of correctness
+and does not mean anyone associated with the site has examined any part
+of it.
 
 This is our second audit of this repository (Erdős 1002, 2026-07-31,
 all layers pass). We have no connection to the author and no stake in
@@ -390,16 +400,13 @@ Not verified, stated plainly:
 - We did not check Wang's claim of priority or novelty beyond the
   problem page, and we express no view on whether the construction is
   the simplest possible.
-- **erdosproblems.com returns 403 to automated requests, so we did not
-  re-fetch the problem page during this audit.** The dates, quotations
-  and attributions in §1 concerning the claim thread, Bloom's reply,
-  Price's question and Tao's answer are carried over from our earlier
-  reading of that page rather than re-verified here, and should be
-  checked against the live thread before anything is published on it.
-  Nothing in Layers 0-6 or in §5 depends on them: the fc findings are
-  checked against fc's own source and the GitHub API, and the
-  statement-faithfulness check in Layer 5 is against the corrected
-  statement as we recorded it.
+- erdosproblems.com returns 403 to automated requests, so the problem
+  page, the comment thread and the proof-claim thread were read in a
+  browser by hand (2026-08-01/02) rather than fetched by tooling. Every
+  date, quotation and attribution in §1 was checked against the live
+  pages that way. Nothing in Layers 0-6 or §5 depends on them regardless:
+  the fc findings are checked against fc's own source and the GitHub API,
+  and Layer 5 is checked against the site statement as displayed.
 - We have not verified Tao's assertion that the unthresholded version
   admits cheap counterexamples. We did not need to: our fc findings in
   §5 are stronger, independent of it, and machine-checked.

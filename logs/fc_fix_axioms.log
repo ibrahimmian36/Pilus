@@ -1,0 +1,3 @@
+'MR486FixCheck.row_zero_irrelevant' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MR486FixCheck.row_zero_unusable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MR486FixCheck.threshold_active' depends on axioms: [propext, Classical.choice, Quot.sound]

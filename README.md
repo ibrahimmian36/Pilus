@@ -77,6 +77,12 @@ missing threshold alone does not repair it** — for `0 < m` the modulus
 `n = 0` is still active. Both guards are needed. See
 [`tools/MR486Defect.lean`](tools/MR486Defect.lean) and §5 of the report.
 
+A corrected file is in [`fc-fix/486.lean`](fc-fix/486.lean), and
+[`tools/MR486FixCheck.lean`](tools/MR486FixCheck.lean) machine-checks that it
+closes the hole rather than merely looking like it does: under the `0 < n`
+guard, row `X 0` can be set to all of `ℤ` without moving the survivor set by
+a single element.
+
 That repository's own `erdos_25` — the singleton special case of exactly
 this problem — has both guards right. The general case and its own
 special case currently disagree.
@@ -94,6 +100,8 @@ statement, and it should not be recorded as doing so.**
 | `tools/AxiomSweep.lean` | Our mechanical sweep: every theorem in the compiled namespace via `CollectAxioms`, one memoized closure walk, so nothing hides behind a hand-kept manifest (492 theorems) |
 | `tools/MRAdversarial.lean` | Our falsification attempt: pins the normalization at three classically known densities, and exhibits a real instance of the problem that *does* have one, so the statement is not hollow and the counterexample is not cheap |
 | `tools/MR486Defect.lean` | Four theorems certified against formal-conjectures' own `Set.HasLogDensity`, showing its `erdos_486` is contentless and that the obvious fix still leaks |
+| `fc-fix/486.lean` | The corrected formal-conjectures file, compiling at `735aee07` |
+| `tools/MR486FixCheck.lean` | Machine-checked proof that the fix *closes* the hole: with the `0 < n` guard, row `X 0` is provably never consulted |
 | `probes/probe486.py` | Exact-rational corroboration of the block lemma's constants and the global assembly arithmetic, independent of the Lean development |
 | `pods/pod_build.sh` | The from-source bootstrap: Lean toolchain compiled from source, mathlib rebuilt with no cache, checks re-run, `lean4checker` replay. **Staged, not executed** — see below |
 | `logs/` | The replay, escape scan, per-module `lean4checker` run, probe output, and the defect certificate's axioms |

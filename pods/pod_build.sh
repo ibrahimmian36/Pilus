@@ -20,6 +20,7 @@ export DEBIAN_FRONTEND=noninteractive
 COMPILER="${COMPILER:-gcc}"                 # gcc | clang
 WALL_CAP="${WALL_CAP:-43200}"               # 12h hard cap (486 is small)
 SMOKE="${SMOKE:-0}"                          # SMOKE=1: cheap preflight only
+L4C_PAT_CAP="${L4C_PAT_CAP:-5400}"           # per-pattern lean4checker cap, 90 min
 WANG_COMMIT=61325b10bbdc29f4fb5e0618b414b9f2189333ad
 MATHLIB_REV=a3a10db0e9d66acbebf76c5e6a135066525ac900
 LEAN_TAG=v4.27.0
@@ -93,7 +94,7 @@ cd lean4-src
 if [ "$COMPILER" = clang ]; then CC=clang; CXX=clang++; else CC=gcc; CXX=g++; fi
 cmake --preset release -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX \
   > "$OUT/toolchain_cmake.log" 2>&1 \
-  && make -C build/release -j"$CORES" > "$OUT/toolchain_make.log" 2>&1 \
+  && make -C build/release -j"$JOBS" > "$OUT/toolchain_make.log" 2>&1 \
   || { note "STAGE1 FAIL toolchain build"; tail -50 "$OUT/toolchain_make.log" >> "$MANIFEST"; exit 1; }
 elan toolchain link lean-src "$WORK/lean4-src/build/release/stage1"
 note "STAGE1 PASS toolchain from source ($COMPILER)"
@@ -115,7 +116,7 @@ for d in .lake/packages/*/; do
   esac
 done
 rm -rf .lake/build
-lake build > "$OUT/lake_build.log" 2>&1 \
+lake build -j"$JOBS" > "$OUT/lake_build.log" 2>&1 \
   || { note "STAGE2 FAIL lake build"; tail -80 "$OUT/lake_build.log" >> "$MANIFEST"; exit 1; }
 note "STAGE2 PASS full from-source build (mathlib + Erdos486, no cache)"
 
@@ -167,30 +168,46 @@ cd "$WORK/wang_repo/486/lean"
 L4C=$WORK/lean4checker/.lake/build/bin/lean4checker
 : > "$OUT/lean4checker_full.log"
 L4C_FAIL=0
+# ORDERING: the per-module Erdos486 replay is the output this audit actually
+# needs, so it runs FIRST. The umbrella patterns below can each take hours
+# (Mathlib especially) and a wall-cap hit during them must not cost us the
+# result we came for. Each pattern also gets its own timeout so one cannot
+# eat the whole cap.
+echo "=== per-module Erdos486 (primary) ===" >> "$OUT/lean4checker_full.log"
+L4C_MODFAIL=0
+for f in Erdos486.lean Erdos486/*.lean; do
+  M=$(echo "$f" | sed 's|/|.|g; s|\.lean$||')
+  if timeout "$L4C_PAT_CAP" lake env "$L4C" "$M" >> "$OUT/lean4checker_full.log" 2>&1; then
+    echo "L4C PASS module $M" | tee -a "$OUT/lean4checker_full.log" >> "$MANIFEST"
+  else
+    RC=$?
+    echo "L4C FAIL module $M rc=$RC" | tee -a "$OUT/lean4checker_full.log" >> "$MANIFEST"
+    L4C_MODFAIL=1
+  fi
+done
+[ "$L4C_MODFAIL" = 0 ] && note "STAGE4a PASS lean4checker all Erdos486 modules" \
+                       || note "STAGE4a PARTIAL lean4checker modules (see per-module lines)"
+
+# Umbrella patterns, best effort, after the primary result is banked.
 # Every pattern gets its own line WITH its exit code. The report may claim
-# coverage only for patterns that show "L4C PASS" here.
-for PAT in Erdos486 Mathlib Batteries Aesop Qq ProofWidgets Plausible ImportGraph Cli LeanSearchClient; do
+# coverage only for patterns that show "L4C PASS" here. rc=124 means the
+# pattern hit its timeout and was NOT checked — do not report it as passing.
+for PAT in Erdos486 Batteries Aesop Qq ProofWidgets Plausible ImportGraph Cli LeanSearchClient Mathlib; do
   echo "=== pattern: $PAT ===" >> "$OUT/lean4checker_full.log"
-  if lake env "$L4C" "$PAT" >> "$OUT/lean4checker_full.log" 2>&1; then
+  if timeout "$L4C_PAT_CAP" lake env "$L4C" "$PAT" >> "$OUT/lean4checker_full.log" 2>&1; then
     echo "L4C PASS $PAT" | tee -a "$OUT/lean4checker_full.log" >> "$MANIFEST"
   else
     RC=$?
-    echo "L4C FAIL rc=$RC $PAT" | tee -a "$OUT/lean4checker_full.log" >> "$MANIFEST"
+    if [ "$RC" = 124 ]; then
+      echo "L4C TIMEOUT $PAT (cap ${L4C_PAT_CAP}s) — NOT CHECKED" | tee -a "$OUT/lean4checker_full.log" >> "$MANIFEST"
+    else
+      echo "L4C FAIL rc=$RC $PAT" | tee -a "$OUT/lean4checker_full.log" >> "$MANIFEST"
+    fi
     L4C_FAIL=1
   fi
 done
-# Per-module fallback for Erdos486 (what the 16 GB laptop had to do).
-echo "=== per-module Erdos486 ===" >> "$OUT/lean4checker_full.log"
-for f in Erdos486.lean Erdos486/*.lean; do
-  M=$(echo "$f" | sed 's|/|.|g; s|\.lean$||')
-  if lake env "$L4C" "$M" >> "$OUT/lean4checker_full.log" 2>&1; then
-    echo "L4C PASS module $M" >> "$OUT/lean4checker_full.log"
-  else
-    echo "L4C FAIL module $M rc=$?" >> "$OUT/lean4checker_full.log"
-  fi
-done
-[ "$L4C_FAIL" = 0 ] && note "STAGE4 PASS lean4checker all patterns" \
-                    || note "STAGE4 PARTIAL lean4checker (see per-pattern lines)"
+[ "$L4C_FAIL" = 0 ] && note "STAGE4b PASS lean4checker all umbrella patterns" \
+                    || note "STAGE4b PARTIAL lean4checker umbrella (see per-pattern lines)"
 
 # ---------- stage 5: digests ----------
 cd "$WORK/wang_repo/486/lean"

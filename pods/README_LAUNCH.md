@@ -30,13 +30,14 @@ had ~23 GiB free. The 16 GB ceiling is also what killed the whole-namespace
 ## Launch (RunPod)
 
 1. Deploy → **CPU pod**. 64 vCPU / ≥192 GB RAM, container disk ≥80 GB.
-   (RAM matters: mathlib elaboration peaks ~2.5 GB per job; the script
-   self-limits jobs to RAM/3.)
-2. Upload `pod_build.sh`, or `curl` it from the Pilus repo.
-3. Preflight first — it is cheap and catches every fetch problem before you
-   pay for six hours:
+   (RAM matters: mathlib elaboration peaks ~2.5 GB per job. The script caps
+   build parallelism at min(cores, RAM_GB/3) and passes it to both `make`
+   and `lake build`.)
+2. In the pod's web terminal, fetch the script and preflight. Preflight is
+   cheap and catches every fetch problem before you pay for six hours:
 
    ```
+   curl -sL https://raw.githubusercontent.com/ibrahimmian36/Pilus/main/pods/pod_build.sh -o pod_build.sh
    SMOKE=1 bash pod_build.sh
    ```
 
@@ -67,10 +68,15 @@ rather than the narrative:
 - `pod_build.EXECUTED.sh` + `.sha256` — the script copies itself in as its
   first action, so this is provably the bytes that ran. The 1002 run did not
   do this and we had to publish a provenance caveat instead.
-- `lean4checker_full.log` — every pattern logs its own exit code as
-  `L4C PASS <pattern>` or `L4C FAIL rc=<n> <pattern>`. **Claim coverage only
-  for patterns with a PASS line.** On the 1002 run the script looped ten
-  patterns but the log evidenced one, and the report had to be walked back.
+- `lean4checker_full.log` — the per-module Erdos486 replay runs **first**,
+  because it is the result we came for and a wall-cap hit during the
+  umbrella patterns must not cost it. Then the umbrella patterns, each with
+  its own 90-minute cap (`L4C_PAT_CAP`). Every line carries its own exit
+  code: `L4C PASS <pat>`, `L4C FAIL rc=<n> <pat>`, or `L4C TIMEOUT <pat> —
+  NOT CHECKED`. **Claim coverage only for lines that say PASS.** A TIMEOUT
+  is not a pass and not a failure; it means that pattern was not checked.
+  On the 1002 run the script looped ten patterns but the log evidenced one,
+  and the report had to be walked back.
 - `check_MRAxioms.log` and `check_AxiomSweep.log` — expect the same output
   as the laptop: the two theorems axiom-clean, and `theorems swept: 492` with
   `AXIOM SWEEP PASS`. **A different theorem count is a red flag**, not a

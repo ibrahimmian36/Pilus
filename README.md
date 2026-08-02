@@ -102,6 +102,7 @@ statement, and it should not be recorded as doing so.**
 |---|---|
 | `reports/erdos-486.md` | The verification report: seven layers (six executed), the counterexample mechanism, the trust base, and what we did *not* verify |
 | `tools/MRAxioms.lean` | The axiom manifest: `#print axioms` on both public theorems |
+| `tools/escape_scan.py` | Escape-token scan that strips Lean comments and string literals first. A plain grep flags the English word "admit" in a docstring and fails a clean repository; nested block comments rule out doing this with a regex |
 | `tools/AxiomSweep.lean` | Our mechanical sweep: every theorem in the compiled namespace via `CollectAxioms`, one memoized closure walk, so nothing hides behind a hand-kept manifest (492 theorems) |
 | `tools/MRAdversarial.lean` | Our falsification attempt: pins the normalization at three classically known densities, and exhibits a real instance of the problem that *does* have one, so the statement is not hollow and the counterexample is not cheap |
 | `tools/MR486Defect.lean` | Four theorems certified against formal-conjectures' own `Set.HasLogDensity`, showing its `erdos_486` is contentless and that the obvious fix still leaks |

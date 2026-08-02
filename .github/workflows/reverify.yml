@@ -49,12 +49,8 @@ jobs:
 
       - name: Escape scan (no sorry, no native_decide, no bespoke axiom)
         run: |
-          cd wang/486/lean
-          if grep -rnE '\b(sorry|admit|native_decide|ofReduceBool|trustCompiler)\b|^[[:space:]]*(axiom|opaque)\b' \
-               Erdos486.lean Erdos486/ ; then
-            echo "::error::escape token found in the audited source"; exit 1
-          fi
-          echo "escape scan clean"
+          python3 tools/escape_scan.py wang/486/lean/Erdos486.lean wang/486/lean/Erdos486 \
+            || { echo "::error::escape token found in the audited source"; exit 1; }
 
       - name: Build the audited development
         working-directory: wang/486/lean

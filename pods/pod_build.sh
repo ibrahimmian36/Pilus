@@ -62,9 +62,28 @@ export PATH="$HOME/.elan/bin:$PATH"
 note "STAGE0 PASS deps"
 
 CORES=$(nproc)
-RAM_GB=$(awk '/MemTotal/{printf "%d", $2/1048576}' /proc/meminfo)
+# RAM detection must be CONTAINER-aware. /proc/meminfo reports the HOST's
+# memory inside a container, so on a cloud pod it wildly overstates what we
+# may actually use: the Erdos 486 run on a 128 GB RunPod pod read 755 GB and
+# the RAM-based clamp silently did nothing. Prefer the cgroup limit.
+RAM_BYTES=""
+if [ -r /sys/fs/cgroup/memory.max ]; then                      # cgroup v2
+  v=$(cat /sys/fs/cgroup/memory.max 2>/dev/null || true)
+  [ "$v" != "max" ] && [ -n "$v" ] && RAM_BYTES=$v
+elif [ -r /sys/fs/cgroup/memory/memory.limit_in_bytes ]; then  # cgroup v1
+  v=$(cat /sys/fs/cgroup/memory/memory.limit_in_bytes 2>/dev/null || true)
+  # v1 reports a sentinel near 2^63 when unlimited
+  [ -n "$v" ] && [ "$v" -lt 9223372036854000000 ] 2>/dev/null && RAM_BYTES=$v
+fi
+if [ -n "$RAM_BYTES" ]; then
+  RAM_GB=$(( RAM_BYTES / 1073741824 )); RAM_SRC=cgroup
+else
+  RAM_GB=$(awk '/MemTotal/{printf "%d", $2/1048576}' /proc/meminfo); RAM_SRC=meminfo-HOST
+fi
 JOBS=$(( RAM_GB / 3 < CORES ? RAM_GB / 3 : CORES )); [ "$JOBS" -lt 4 ] && JOBS=4
-note "cores=$CORES ram=${RAM_GB}GB jobs=$JOBS"
+JOBS="${JOBS_OVERRIDE:-$JOBS}"
+note "cores=$CORES ram=${RAM_GB}GB (source=$RAM_SRC) jobs=$JOBS"
+[ "$RAM_SRC" = meminfo-HOST ] && note "WARN ram read from host meminfo; the RAM clamp may be ineffective in a container. Set JOBS_OVERRIDE to force."
 # NOTE: lean4checker over the whole Erdos486 namespace needs the full mathlib
 # environment resident. It was killed at 16 GB on the audit laptop. Size this
 # pod at >= 32 GB or the STAGE4 umbrella pattern will die with exit 137.

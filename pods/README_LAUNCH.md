@@ -32,7 +32,11 @@ had ~23 GiB free. The 16 GB ceiling is also what killed the whole-namespace
 1. Deploy → **CPU pod**. 64 vCPU / ≥192 GB RAM, container disk ≥80 GB.
    (RAM matters: mathlib elaboration peaks ~2.5 GB per job. The script caps
    build parallelism at min(cores, RAM_GB/3) and passes it to both `make`
-   and `lake build`.)
+   and `lake build`. It reads the **cgroup** limit, not `/proc/meminfo`,
+   which inside a container reports the host's memory: on the first 486 run
+   a 128 GB pod read 755 GB and the clamp did nothing. If the manifest logs
+   `source=meminfo-HOST`, the clamp is not trustworthy and you should set
+   `JOBS_OVERRIDE` yourself.)
 2. In the pod's web terminal, fetch the script and preflight. Preflight is
    cheap and catches every fetch problem before you pay for six hours:
 
